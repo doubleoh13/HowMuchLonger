@@ -1,0 +1,29 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:How_Much_Longer"
+        xmlns:vms="clr-namespace:How_Much_Longer.ViewModels"
+        xmlns:views="clr-namespace:How_Much_Longer.Views"
+        x:Class="How_Much_Longer.MainWindow"
+        mc:Ignorable="d"
+        Title="How Much Longer" 
+        ResizeMode="CanMinimize" 
+        Width="410" 
+        Height="209" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Center" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="SingleBorderWindow" 
+        Icon="/Resources/icon.ico">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:CountdownViewModel}">
+            <views:CountdownView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:AfterHoursViewModel}">
+            <views:AfterHoursView/>
+        </DataTemplate>
+    </Window.Resources>
+    <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
+</Window>
