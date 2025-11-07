@@ -26,4 +26,9 @@
     <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\app.ico" />
+    <Resource Include="Resources\app.ico" />
+  </ItemGroup>
+
 </Project>

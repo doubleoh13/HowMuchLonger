@@ -9,7 +9,8 @@
         Title="How Much Longer" Height="400" Width="600"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Background="#f5f5f5">
+        Background="#f5f5f5"
+        Icon="pack://application:,,,/Resources/app.ico">
 
     <Window.Resources>
         <Style x:Key="CountdownTextStyle" TargetType="TextBlock">
@@ -109,7 +110,8 @@
         <!-- System Tray Icon -->
         <tb:TaskbarIcon x:Name="TrayIcon"
                        ToolTipText="How Much Longer"
-                       TrayMouseDoubleClick="TrayIcon_TrayMouseDoubleClick">
+                       TrayMouseDoubleClick="TrayIcon_TrayMouseDoubleClick"
+                       IconSource="pack://application:,,,/Resources/app.ico">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Show" Click="ShowWindow_Click"/>
