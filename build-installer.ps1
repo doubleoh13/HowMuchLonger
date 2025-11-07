@@ -2,8 +2,7 @@
 # This script builds the application and creates an installer using Velopack
 
 param(
-    [string]$Version = "1.0.0",
-    [string]$Channel = "stable"
+    [string]$Version = "1.0.0"
 )
 
 Write-Host "========================================" -ForegroundColor Cyan
@@ -70,8 +69,7 @@ vpk pack `
     --mainExe "HowMuchLonger.exe" `
     --outputDir $ReleasesDir `
     --packTitle "How Much Longer" `
-    --packAuthors "Your Name" `
-    --channel $Channel
+    --packAuthors "Jake Richhart"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "`nPackaging failed!" -ForegroundColor Red
