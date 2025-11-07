@@ -1,0 +1,123 @@
+﻿<Window x:Class="HowMuchLonger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HowMuchLonger"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        mc:Ignorable="d"
+        Title="How Much Longer" Height="400" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Background="#f5f5f5">
+
+    <Window.Resources>
+        <Style x:Key="CountdownTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#2c3e50"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498db"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980b9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title/Status -->
+        <TextBlock Grid.Row="0"
+                   Text="{Binding StatusMessage}"
+                   FontSize="20"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   Foreground="#7f8c8d"
+                   Margin="0,0,0,20"/>
+
+        <!-- Main Countdown Display -->
+        <Viewbox Grid.Row="1" Margin="0,10">
+            <TextBlock Text="{Binding FormattedTime}"
+                       Style="{StaticResource CountdownTextStyle}"
+                       FontSize="120"/>
+        </Viewbox>
+
+        <!-- Total Minutes Display -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,10">
+            <TextBlock Text="Total Minutes: " FontSize="18" FontWeight="SemiBold" Foreground="#7f8c8d"/>
+            <TextBlock Text="{Binding TotalMinutesRemaining}" FontSize="18" FontWeight="Bold" Foreground="#e74c3c"/>
+        </StackPanel>
+
+        <!-- Total Seconds Display -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <TextBlock Text="Total Seconds: " FontSize="18" FontWeight="SemiBold" Foreground="#7f8c8d"/>
+            <TextBlock Text="{Binding TotalSecondsRemaining}" FontSize="18" FontWeight="Bold" Foreground="#e74c3c"/>
+        </StackPanel>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Settings"
+                    Command="{Binding OpenSettingsCommand}"
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Minimize to Tray"
+                    Command="{Binding MinimizeToTrayCommand}"
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Exit"
+                    Command="{Binding ExitCommand}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                        <Setter Property="Background" Value="#e74c3c"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#c0392b"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+        <!-- System Tray Icon -->
+        <tb:TaskbarIcon x:Name="TrayIcon"
+                       ToolTipText="How Much Longer"
+                       TrayMouseDoubleClick="TrayIcon_TrayMouseDoubleClick">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Show" Click="ShowWindow_Click"/>
+                    <MenuItem Header="Settings" Click="Settings_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Exit" Click="Exit_Click"/>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+    </Grid>
+</Window>
