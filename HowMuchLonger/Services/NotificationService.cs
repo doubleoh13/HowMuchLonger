@@ -1,5 +1,4 @@
 using Microsoft.Toolkit.Uwp.Notifications;
-using Windows.UI.Notifications;
 
 namespace HowMuchLonger.Services;
 
@@ -10,37 +9,58 @@ public class NotificationService
 {
     public void ShowHourlyNotification(TimeSpan timeRemaining)
     {
-        var hours = (int)timeRemaining.TotalHours;
-        var hourText = hours == 1 ? "hour" : "hours";
+        try
+        {
+            var hours = (int)timeRemaining.TotalHours;
+            var hourText = hours == 1 ? "hour" : "hours";
 
-        var toast = new ToastContentBuilder()
-            .AddText("How Much Longer")
-            .AddText($"{hours} {hourText} left until end of workday")
-            .GetToastContent();
+            new ToastContentBuilder()
+                .AddText("How Much Longer")
+                .AddText($"{hours} {hourText} left until end of workday")
+                .Show();
 
-        var toastNotification = new ToastNotification(toast.GetXml());
-        ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
+            System.Diagnostics.Debug.WriteLine($"Hourly notification sent: {hours} {hourText} remaining");
+        }
+        catch (Exception ex)
+        {
+            // Log but don't crash the app if notifications fail
+            System.Diagnostics.Debug.WriteLine($"Failed to show hourly notification: {ex.Message}");
+        }
     }
 
     public void ShowMilestoneNotification(string message)
     {
-        var toast = new ToastContentBuilder()
-            .AddText("How Much Longer")
-            .AddText(message)
-            .GetToastContent();
+        try
+        {
+            new ToastContentBuilder()
+                .AddText("How Much Longer")
+                .AddText(message)
+                .Show();
 
-        var toastNotification = new ToastNotification(toast.GetXml());
-        ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
+            System.Diagnostics.Debug.WriteLine($"Milestone notification sent: {message}");
+        }
+        catch (Exception ex)
+        {
+            // Log but don't crash the app if notifications fail
+            System.Diagnostics.Debug.WriteLine($"Failed to show milestone notification: {ex.Message}");
+        }
     }
 
     public void ShowWorkdayEndedNotification()
     {
-        var toast = new ToastContentBuilder()
-            .AddText("How Much Longer")
-            .AddText("Workday is over! Time to go home!")
-            .GetToastContent();
+        try
+        {
+            new ToastContentBuilder()
+                .AddText("How Much Longer")
+                .AddText("Workday is over! Time to go home!")
+                .Show();
 
-        var toastNotification = new ToastNotification(toast.GetXml());
-        ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
+            System.Diagnostics.Debug.WriteLine("Workday ended notification sent");
+        }
+        catch (Exception ex)
+        {
+            // Log but don't crash the app if notifications fail
+            System.Diagnostics.Debug.WriteLine($"Failed to show workday ended notification: {ex.Message}");
+        }
     }
 }
